@@ -5,7 +5,7 @@ import function
 app = Flask(__name__)
 app.jinja_env.filters['zip'] = zip
 # 请将 xxx 替换为随机字符
-app.config['SECRET_KEY'] = 'xxx'
+app.config['SECRET_KEY'] = 'c2jf932hibfiuebvwievubheriuvberv'
 
 
 @app.route('/')
@@ -143,4 +143,4 @@ def changeip_vm(tag):
 
 
 if __name__ == '__main__':
-    app.run(port=8888, debug=True)
+    app.run(port=8888, host='0.0.0.0')
