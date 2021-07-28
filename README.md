@@ -3,7 +3,7 @@ Manage your VM in Azure using cookies.
 
 Default VM infomation:
 
-USERNAME : defaultuser
+USERNAME : defaultuser<br>
 PASSWORD : Thisisyour.password1
 
 ## 1.Install Python 3.9.4
