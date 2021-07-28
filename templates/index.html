@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>账号 {{ account }} 管理中</p>
+    <ul class="list">
+        <li>{{ account }}
+            <span class="float-right">
+            <a class="go" href="/account/list" title="GO!">管理</a>
+            <a class="go" href="/account/delete" target="" title="GO!" onclick="return confirm('Are you sure?')">删除管理账号</a>
+            </span>
+        </li>
+    </ul>
+{% endblock %}

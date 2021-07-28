@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>{{ account }} 管理中 <a class="go" href="/account/vm/create" title="GO!">新建虚拟机</a> <a class="go" href="/account/list" title="GO!">刷新账户状态</a></p>
+    <ul  class="list">
+        {% for ip, tag in dict["ip"]|zip(dict["tag"]) %}
+        <li>{{ tag }} - {{ ip }}
+        <span class="float-right">
+            <a class="go" href="/account/vm/delete/{{ tag }}" title="GO!" onclick="return confirm('Are you sure?')">删除虚拟机</a>
+            <a class="go" href="/account/vm/changeip/{{ tag }}" title="GO!" onclick="return confirm('Are you sure?')">更换IP</a>
+            <a class="go" href="/account/vm/start/{{ tag }}" title="GO!" onclick="return confirm('Are you sure?')">启动虚拟机</a>
+            <a class="go" href="/account/vm/stop/{{ tag }}" title="GO!" onclick="return confirm('Are you sure?')">停止虚拟机</a>
+        </span>
+        </li>
+        {% endfor %}{# 使用 endfor 标签结束 for 语句 #}
+    </ul>
+{% endblock %}
