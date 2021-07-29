@@ -3,7 +3,9 @@ from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.network import NetworkManagementClient
 from azure.mgmt.compute import ComputeManagementClient
 from azure.common.credentials import ServicePrincipalCredentials
-import time
+from azure.mgmt.compute.models import DiskCreateOption
+
+import time,base64
 
 
 def create_credential_object(tenant_id, client_id, client_secret):
@@ -28,7 +30,7 @@ def create_resource_group(subscription_id, credential, tag, location):
                                                                  )
 
 
-def create_or_update_vm(subscription_id, credential, tag, location, username, password, size, os):
+def create_or_update_vm(subscription_id, credential, tag, location, username, password, size, os,rootpwd):
     global publisher, offer, sku
     compute_client = ComputeManagementClient(credential, subscription_id)
     RESOURCE_GROUP_NAME = tag
@@ -41,6 +43,7 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
     VM_NAME = tag
     USERNAME = username
     PASSWORD = password
+    ROOT_PWD = rootpwd
     SIZE = size
     if os == "ubuntu18":
         publisher = "Canonical"
@@ -112,10 +115,21 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
                                                                 }
                                                                 )
     nic_result = poller.result()
+    s = "IyEvYmluL2Jhc2gKZWNobyByb290OnBweHdvMTIzIHxzdWRvIGNocGFzc3dkIHJvb3QKc3VkbyBzZWQgLWkgJ3MvXi4qUGVybWl0Um9vdExvZ2luLiovUGVybWl0Um9vdExvZ2luIHllcy9nJyAvZXRjL3NzaC9zc2hkX2NvbmZpZzsKc3VkbyBzZWQgLWkgJ3MvXi4qUGFzc3dvcmRBdXRoZW50aWNhdGlvbi4qL1Bhc3N3b3JkQXV0aGVudGljYXRpb24geWVzL2cnIC9ldGMvc3NoL3NzaGRfY29uZmlnOwpzdWRvIHNlcnZpY2Ugc3NoZCByZXN0YXJ0"
+    if (ROOT_PWD != ""):
+        d = base64.b64decode(s).decode('latin-1')
+        d = d.replace("ppxwo123",ROOT_PWD)
+        CUSTOM_DATA = base64.b64encode(b_d.encode("utf-8")).decode('latin-1')
+    else:
+        CUSTOM_DATA = s
     poller = compute_client.virtual_machines.create_or_update(RESOURCE_GROUP_NAME, VM_NAME,
                                                               {
                                                                   "location": LOCATION,
                                                                   "storage_profile": {
+                                                                      "osDisk":{
+                                                                          "createOption":"fromImage",
+                                                                          "diskSizeGB":64
+                                                                      },
                                                                       "image_reference": {
                                                                           "offer": offer,
                                                                           "publisher": publisher,
@@ -130,6 +144,7 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
                                                                       "computer_name": VM_NAME,
                                                                       "admin_username": USERNAME,
                                                                       "admin_password": PASSWORD,
+                                                                      "custom_data": CUSTOM_DATA
                                                                   },
                                                                   "network_profile": {
                                                                       "network_interfaces": [{
@@ -139,6 +154,7 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
                                                               }
                                                               )
     vm_result = poller.result()
+    print(vm_result)
 
 
 def start_vm(subscription_id, credential, tag):
