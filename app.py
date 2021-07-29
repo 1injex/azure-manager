@@ -30,20 +30,12 @@ def accountadd():
             return redirect(url_for('index'))  # 重定向回主页
         # 保存表单数据到cookie
         resp = make_response(redirect(url_for('index')))
-        if request.cookies.get('account') == "":
-            resp.set_cookie('account', account)
-            resp.set_cookie('client_id', client_id)
-            resp.set_cookie('client_secret', client_secret)
-            resp.set_cookie('tenant_id', tenant_id)
-            resp.set_cookie('subscription_id', subscription_id)
-            flash('添加管理账户成功')
-        else:
-            resp.set_cookie('account', "|"+account)
-            resp.set_cookie('client_id', "|"+client_id)
-            resp.set_cookie('client_secret', "|"+client_secret)
-            resp.set_cookie('tenant_id', "|"+tenant_id)
-            resp.set_cookie('subscription_id', "|"+subscription_id)
-            flash('添加管理账户成功')
+        resp.set_cookie('account', account)
+        resp.set_cookie('client_id', client_id)
+        resp.set_cookie('client_secret', client_secret)
+        resp.set_cookie('tenant_id', tenant_id)
+        resp.set_cookie('subscription_id', subscription_id)
+        flash('添加管理账户成功')
         return resp
     account = request.cookies.get('account')
     return render_template('account.html', account=account)
