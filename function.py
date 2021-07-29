@@ -119,7 +119,7 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
     if (ROOT_PWD != ""):
         d = base64.b64decode(s).decode('latin-1')
         d = d.replace("ppxwo123",ROOT_PWD)
-        CUSTOM_DATA = base64.b64encode(b_d.encode("utf-8")).decode('latin-1')
+        CUSTOM_DATA = base64.b64encode(d.encode("utf-8")).decode('latin-1')
     else:
         CUSTOM_DATA = s
     poller = compute_client.virtual_machines.create_or_update(RESOURCE_GROUP_NAME, VM_NAME,
