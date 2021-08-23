@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>{{ Credentials|length }} 账号管理数</p>
+    <ul class="list">
+        {% for Credential in Credentials %}
+        <li>{{ Credential.id }} - {{ Credential.account }}
+            <span class="float-right">
+                <form class="inline-form" method="post" action="{{ url_for('list', credential_id=Credential.id)}}">
+                    <input class="go" type="submit" name="delete" value="Manage">
+                </form>
+                <form class="inline-form" method="post" action="{{ url_for('account_delete', credential_id=Credential.id)}}">
+                    <input class="go" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+                </form>
+            </span>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

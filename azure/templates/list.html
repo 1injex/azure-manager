@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>账户 {{ account }} 管理中 <a class="go" href="/account/{{ id }}/vm/create" title="GO!">NEWVM</a></p>
+    <p>VM信息不自动更新，请手动刷新浏览器页面</p>
+    <ul  class="list">
+        {% for ip, tag in dict["ip"]|zip(dict["tag"]) %}
+        <li>{{ tag }} - {{ ip }}
+        <span class="float-right">
+            <form class="inline-form" method="post" action="{{ url_for('stop_vm', credential_id=id, tag=tag) }}">
+                 <input class="go" type="submit" name="delete" value="Stop" onclick="return confirm('Are you sure?')">
+            </form>
+            <form class="inline-form" method="post" action="{{ url_for('start_vm', credential_id=id, tag=tag) }}">
+                 <input class="go" type="submit" name="delete" value="Start" onclick="return confirm('Are you sure?')">
+            </form>
+            <form class="inline-form" method="post" action="{{ url_for('delete_vm', credential_id=id, tag=tag) }}">
+                 <input class="go" type="submit" name="delete" value="Delete" onclick="return confirm('Are you sure?')">
+            </form>
+            <form class="inline-form" method="post" action="{{ url_for('changeip_vm', credential_id=id, tag=tag) }}">
+                 <input class="go" type="submit" name="delete" value="ChangeIP" onclick="return confirm('Are you sure?')">
+            </form>
+        </span>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

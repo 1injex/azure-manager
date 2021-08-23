@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>{{ Credentials|length }} Accounts</p>
+    <form method="post">
+         <p>Email <input type="text" name="account" autocomplete="off" required></p>
+         <p>Client_id <input type="text" name="client_id" autocomplete="off" required></p>
+         <p>Client_secret <input type="text" name="client_secret" autocomplete="off" required></p>
+         <p>Tenant_id <input type="text" name="tenant_id" autocomplete="off" required></p>
+         <p>Subscription_id <input type="text" name="subscription_id" autocomplete="off" required></p>
+    <input class="btn" type="submit" name="submit" value="Add">
+    </form>
+{% endblock %}
