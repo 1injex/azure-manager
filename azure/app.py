@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+import time
 import function
 import os
 import click
@@ -183,6 +184,8 @@ def create_vm(credential_id):
         tenant_id = credential.tenant_id
         subscription_id = credential.subscription_id
         tag = request.form.get('tag')
+        createtime = time.strftime('%m%d-%H%M', time.localtime(time.time()))
+        tag = (tag + "-" + createtime)
         location = request.form.get('location')
         size = request.form.get('size')
         os = request.form.get('os')
