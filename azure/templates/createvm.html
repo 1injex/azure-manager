@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>{{ account }} 管理中</p>
+    <form method="post">
+      <div>
+          <p><label>tag(仅限英文数字组合) <input type="text" name="tag" autocomplete="off" required></label></p>
+        <p><label>区域 <select name="location" required>
+            <option value="eastasia">香港</option>
+            <option value="southeastasia">新加坡</option>
+            <option value="japanwest">日本西部</option>
+            <option value="japaneast">日本东部</option>
+            <option value="koreacentral">韩国中部</option>
+            <option value="koreasouth">韩国南部</option>
+            <option value="northcentralus">美国中北部</option>
+            <option value="westus2">美国西2</option>
+            <option value="westus3">美国西3</option>
+            <option value="centralus">美国中部</option>
+            <option value="westcentralus">美国中西部</option>
+            <option value="eastus">美国东部</option>
+            <option value="eastus2">美国东部2</option>
+            <option value="southcentralus">美国中南部</option>
+            <option value="australiaeast">澳洲南部</option>
+            <option value="northeurope">欧洲北部</option>
+            <option value="uksouth">英国南部</option>
+            <option value="southafricanorth">南非北部</option>
+            <option value="canadacentral">加拿大中部</option>
+            <option value="francecentral">法国中部</option>
+            <option value="germanywestcentral">德国中西部</option>
+            <option value="norwayeast">挪威东部</option>
+            <option value="switzerlandnorth">瑞典北部</option>
+            <option value="uaenorth">阿联酋北部</option>
+            <option value="qatarcentral">卡塔尔中部</option>
+            <option value="brazilsouth">巴西南部</option>
+            <option value="australiacentral">澳洲中部</option>
+            <option value="australiasoutheast">澳洲东南部</option>
+            <option value="southindia">印度南部</option>
+            <option value="westindia">印度西部</option>
+            <option value="ukwest">英国西部</option>
+            <option value="canadaeast">加拿大东部</option>
+        </select></label></p>
+        <p><label>型号 <select name="size" required>
+            <option value="Standard_B1s">B1s - 1C1G</option>
+            <option value="Standard_B1ms">B1ms - 1C2G</option>
+            <option value="Standard_B2s">B2s - 2C4G</option>
+            <option value="Standard_B2ms">B2ms - 2C8G</option>
+            <option value="Standard_D2s_v3">D2s_v3 - 2C8G</option>
+            <option value="Standard_D4s_v3">D4s_v3 - 4C16G</option>
+            <option value="Standard_F2s">F2s - 2C4G - 更好的性能</option>
+            <option value="Standard_F4s">F4s - 4G8G - 更好的性能</option>
+        </select></label></p>
+        <p><label>数量 <select name="set" required>
+            <option value="1">创建1台</option>
+            <option value="2">创建2台</option>
+            <option value="3">创建3台</option>
+            <option value="4">创建4台</option>
+            <option value="5">创建5台</option>
+        </select></label></p>
+        <p><label>系统 <select name="os" required>
+            <option value="debian10">Debian 10</option>
+            <option value="ubuntu20">Ubuntu 20.04 LTS</option>
+            <option value="ubuntu18">Ubuntu 18.04 LTS</option>
+            <option value="ubuntu16">Ubuntu 16.04</option>
+            <option value="centos">CentOS 7.5</option>
+            <option value="windows">WindowsServer2019</option>
+	    <option value="windows-server-2012-r2-datacenter-smalldisk-g2">[smalldisk] Windows Server 2012 R2 Datacenter - Gen2</option>
+        </select></label></p>
+        <p><label>硬盘大小 <select name="disk" required>
+            <option value="32">32 GB</option>
+            <option value="64">64 GB</option>
+            <option value="64">100 GB</option>
+	        <option value="128">128 GB</option>
+            <option value="256">256 GB</option>
+            <option value="256">300 GB</option>
+            <option value="512">512 GB</option>
+            <option value="1024">1 TB</option>
+        </select></label></p>
+        <form method="post">
+         <p>自定义脚本(请使用Base64预编码) <input type="text" name="custom" autocomplete="off"></p>
+        </form>
+        <p><label>ACC(仅F4S机型可开启)<select name="acc" required>
+            <option value="False">默认不开启</option>
+            <option value="True">开启</option>
+        </select></label></p>
+        <p><label>Spot实例<select name="spot" required>
+            <option value="False">默认不开启</option>
+            <option value="True">开启</option>
+        </select></label></p>
+    <input class="btn" type="submit" name="submit" value="Add">
+      </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>{{ Credentials|length }} Accounts</p>
+    <form method="post">
+         <p>Email <input type="text" name="account" autocomplete="off" required></p>
+         <p>ApiKey String <input type="text" name="string" autocomplete="off" required></p>
+    <input class="btn" type="submit" name="submit" value="Add">
+    </form>
+{% endblock %}
