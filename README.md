@@ -31,7 +31,7 @@ There will be some output like this:
 {
   "appId": "AAA",
   "displayName": "azure-cli",
-  "password": "BB",
+  "password": "BBB",
   "tenant": "CCC"
 }
 ```
