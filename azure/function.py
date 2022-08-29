@@ -7,7 +7,7 @@ import time
 
 
 def create_credential_object(tenant_id, client_id, client_secret):
-    print("生成身份证明对象")
+    print("Create Credential")
     tenant_id = tenant_id
     client_id = client_id
     client_secret = client_secret
@@ -16,7 +16,7 @@ def create_credential_object(tenant_id, client_id, client_secret):
 
 
 def create_resource_group(subscription_id, credential, tag, location):
-    print("创建资源组")
+    print("Create Resource Group")
     credential = credential
     resource_client = ResourceManagementClient(credential, subscription_id)
     RESOURCE_GROUP_NAME = tag
@@ -44,13 +44,15 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
     SIZE = size
     DISK = disk
     CUSTOM = custom
+    ACC = acc
     if spot == "True":
         SPOT = "Spot"
         DELETE = "Delete"
-    if SIZE != "Standard_F4s":
-        ACC = "False"
+        MAXPRICE = 100000
     else:
-        ACC = acc
+        SPOT = ""
+        DELETE = ""
+        MAXPRICE = ""
     if os == "ubuntu18":
         publisher = "Canonical"
         offer = "UbuntuServer"
@@ -94,7 +96,7 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
 
     network_client = NetworkManagementClient(credential, subscription_id)
     try:
-        print("创建VNET")
+        print("Create VNET")
         poller = network_client.virtual_networks.create_or_update(RESOURCE_GROUP_NAME,
                                                                   VNET_NAME,
                                                                   {
@@ -105,13 +107,13 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
                                                                   }
                                                                   )
         vnet_result = poller.result()
-        print("创建Subnets")
+        print("Create Subnets")
         poller = network_client.subnets.create_or_update(RESOURCE_GROUP_NAME,
                                                          VNET_NAME, SUBNET_NAME,
                                                          {"address_prefix": "10.0.0.0/24"}
                                                          )
         subnet_result = poller.result()
-        print("创建公网IP")
+        print("Create Public IP")
         poller = network_client.public_ip_addresses.create_or_update(RESOURCE_GROUP_NAME,
                                                                      IP_NAME,
                                                                      {
@@ -122,7 +124,7 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
                                                                      }
                                                                      )
         ip_address_result = poller.result()
-        print("创建网络接口")
+        print("Create Interface")
         poller = network_client.network_interfaces.create_or_update(RESOURCE_GROUP_NAME,
                                                                     NIC_NAME,
                                                                     {
@@ -137,7 +139,7 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
                                                                     }
                                                                     )
         nic_result = poller.result()
-        print("创建VM")
+        print("Create VM")
         poller = compute_client.virtual_machines.create_or_update(RESOURCE_GROUP_NAME, VM_NAME,
                                                                   {
                                                                       "location": LOCATION,
@@ -170,16 +172,16 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
                                                                       "priority": SPOT,
                                                                       "evictionPolicy": DELETE,
                                                                       "billingProfile": {
-                                                                          "maxPrice": 100000
+                                                                          "maxPrice": MAXPRICE
                                                                       }
                                                                   }
                                                                   )
         vm_result = poller.result()
-        print("创建VM成功")
+        print("Create VM {} successful".format(tag))
     except:
-        print("创建VM失败")
+        print("Create VM {} fail".format(tag))
         delete_vm(subscription_id, credential, tag)
-        print("已删除资源组")
+        print("Deleting resource group...")
 
 
 def start_vm(subscription_id, credential, tag):
