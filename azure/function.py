@@ -53,46 +53,155 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
         SPOT = ""
         DELETE = ""
         MAXPRICE = ""
-    if os == "ubuntu18":
-        publisher = "Canonical"
-        offer = "UbuntuServer"
-        sku = "18.04-LTS"
-        version = "latest"
-    elif os == "ubuntu16":
-        publisher = "Canonical"
-        offer = "UbuntuServer"
-        sku = "16.04.0-LTS"
-        version = "latest"
-    elif os == "centos":
-        publisher = "OpenLogic"
-        offer = "CentOS"
-        sku = "7.5"
-        version = "latest"
-    elif os == "debian10":
-        publisher = "Debian"
-        offer = "debian-10"
-        sku = "10"
-        version = "latest"
-    elif os == "windows":
-        publisher = "MicrosoftWindowsServer"
-        offer = "WindowsServer"
-        sku = "2019-Datacenter-smalldisk"
-        version = "latest"
-    elif os == "windows-server-2012-r2-datacenter-smalldisk-g2":
-        publisher = "MicrosoftWindowsServer"
-        offer = "WindowsServer"
-        sku = "2012-r2-datacenter-smalldisk-g2"
-        version = "latest"
-    elif os == "ubuntu20":
-        publisher = "Canonical"
-        offer = "0001-com-ubuntu-server-focal"
-        sku = "20_04-lts"
-        version = "latest"
-    else:
-        publisher = "Debian"
-        offer = "debian-10"
-        sku = "10"
-        version = "latest"
+    images_list = {
+        "Debian_9": {
+            "display": "Debian 9",
+            "sku": "9",
+            "publisher": "credativ",
+            "version": "latest",
+            "offer": "Debian",
+        },
+        "Debian_10": {
+            "display": "Debian 10 (gen2)",
+            "sku": "10-gen2",
+            "publisher": "Debian",
+            "version": "latest",
+            "offer": "debian-10",
+        },
+        "Debian_11": {
+            "display": "Debian 11 (gen2)",
+            "sku": "11-gen2",
+            "publisher": "Debian",
+            "version": "latest",
+            "offer": "debian-11",
+        },
+        "Debian_10_gen1": {
+            "display": "Debian 10",
+            "sku": "10",
+            "publisher": "Debian",
+            "version": "latest",
+            "offer": "debian-10",
+        },
+        "Debian_11_gen1": {
+            "display": "Debian 11",
+            "sku": "11",
+            "publisher": "Debian",
+            "version": "latest",
+            "offer": "debian-11",
+        },
+        "Ubuntu_16_04": {
+            "display": "Ubuntu 16.04 (gen2)",
+            "sku": "16_04-lts-gen2",
+            "publisher": "Canonical",
+            "version": "latest",
+            "offer": "UbuntuServer",
+        },
+        "Ubuntu_18_04": {
+            "display": "Ubuntu 18.04 (gen2)",
+            "sku": "18_04-lts-gen2",
+            "publisher": "Canonical",
+            "version": "latest",
+            "offer": "UbuntuServer",
+        },
+        "Ubuntu_20_04": {
+            "display": "Ubuntu 20.04 (gen2)",
+            "sku": "20_04-lts-gen2",
+            "publisher": "Canonical",
+            "version": "latest",
+            "offer": "0001-com-ubuntu-server-focal",
+        },
+        "Ubuntu_16_04_gen1": {
+            "display": "Ubuntu 16.04",
+            "sku": "16.04.0-LTS",
+            "publisher": "Canonical",
+            "version": "latest",
+            "offer": "UbuntuServer",
+        },
+        "Ubuntu_18_04_gen1": {
+            "display": "Ubuntu 18.04",
+            "sku": "18.04-LTS",
+            "publisher": "Canonical",
+            "version": "latest",
+            "offer": "UbuntuServer",
+        },
+        "Ubuntu_20_04_gen1": {
+            "display": "Ubuntu 20.04",
+            "sku": "20_04-lts",
+            "publisher": "Canonical",
+            "version": "latest",
+            "offer": "0001-com-ubuntu-server-focal",
+        },
+        "Centos_79": {
+            "display": "Centos 7.9 (gen2)",
+            "sku": "7_9-gen2",
+            "publisher": "OpenLogic",
+            "version": "latest",
+            "offer": "CentOS",
+        },
+        "Centos_79_gen1": {
+            "display": "Centos 7.9",
+            "sku": "7_9",
+            "publisher": "OpenLogic",
+            "version": "latest",
+            "offer": "CentOS",
+        },
+        "Centos_85": {
+            "display": "Centos 8.5 (gen2)",
+            "sku": "8_5-gen2",
+            "publisher": "OpenLogic",
+            "version": "latest",
+            "offer": "CentOS",
+        },
+        "Centos_85_gen1": {
+            "display": "Centos 8.5",
+            "sku": "8_5",
+            "publisher": "OpenLogic",
+            "version": "latest",
+            "offer": "CentOS",
+        },
+        "WinData_2022": {
+            "display": "Windows Datacenter 2022",
+            "sku": "2022-Datacenter-smalldisk",
+            "publisher": "MicrosoftWindowsServer",
+            "version": "latest",
+            "offer": "WindowsServer",
+        },
+        "WinData_2019": {
+            "display": "Windows Datacenter 2019",
+            "sku": "2019-Datacenter-smalldisk",
+            "publisher": "MicrosoftWindowsServer",
+            "version": "latest",
+            "offer": "WindowsServer",
+        },
+        "WinData_2016": {
+            "display": "Windows Datacenter 2016",
+            "sku": "2016-Datacenter-smalldisk",
+            "publisher": "MicrosoftWindowsServer",
+            "version": "latest",
+            "offer": "WindowsServer",
+        },
+        "WinData_2012": {
+            "display": "Windows Datacenter 2012",
+            "sku": "2012-Datacenter-smalldisk",
+            "publisher": "MicrosoftWindowsServer",
+            "version": "latest",
+            "offer": "WindowsServer",
+        },
+        "WinDesk_10": {
+            "display": "Windows 10 21H2 (gen2)",
+            "sku": "win10-21h2-pro-zh-cn-g2",
+            "publisher": "MicrosoftWindowsDesktop",
+            "version": "latest",
+            "offer": "Windows-10",
+        },
+        "WinDesk_11": {
+            "display": "Windows 11 21H2",
+            "sku": "win11-21h2-pro-zh-cn",
+            "publisher": "MicrosoftWindowsDesktop",
+            "version": "latest",
+            "offer": "Windows-11",
+        }
+    }
 
     network_client = NetworkManagementClient(credential, subscription_id)
     try:
@@ -148,12 +257,7 @@ def create_or_update_vm(subscription_id, credential, tag, location, username, pa
                                                                               "createOption": "fromImage",
                                                                               "diskSizeGB": DISK
                                                                           },
-                                                                          "image_reference": {
-                                                                              "offer": offer,
-                                                                              "publisher": publisher,
-                                                                              "sku": sku,
-                                                                              "version": version
-                                                                          }
+                                                                          "image_reference": images_list[os]
                                                                       },
                                                                       "hardware_profile": {
                                                                           "vm_size": SIZE

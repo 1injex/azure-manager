@@ -198,7 +198,7 @@ def create_vm(credential_id):
         password = "Thisis.yourpassword1"
         credential = function.create_credential_object(tenant_id, client_id, client_secret)
         for i in range(int(set)):
-            name = (tag + str(i + 1))
+            name = (tag + "-" + str(i + 1))
             function.create_resource_group(subscription_id, credential, name, location)
             threading.Thread(target=function.create_or_update_vm, args=(
             subscription_id, credential, name, location, username, password, size, os, custom, acc, disk, spot)).start()

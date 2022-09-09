@@ -44,10 +44,14 @@
             <option value="Standard_B1ms">B1ms - 1C2G</option>
             <option value="Standard_B2s">B2s - 2C4G</option>
             <option value="Standard_B2ms">B2ms - 2C8G</option>
+            <option value="Standard_DS1_v2">DS1_v2 - 1C3.5G</option>
+            <option value="Standard_DS2_v2">DS1_v2 - 2C7G</option>
+            <option value="Standard_DS3_v2">DS3_v2 - 4C14G</option>
             <option value="Standard_D2s_v3">D2s_v3 - 2C8G</option>
             <option value="Standard_D4s_v3">D4s_v3 - 4C16G</option>
-            <option value="Standard_F2s">F2s - 2C4G - 更好的性能</option>
-            <option value="Standard_F4s">F4s - 4G8G - 更好的性能</option>
+            <option value="Standard_F1s">F1S - 1C2G</option>
+            <option value="Standard_F2s">F2s - 2C4G</option>
+            <option value="Standard_F4s">F4s - 4G8G</option>
         </select></label></p>
         <p><label>数量 <select name="set" required>
             <option value="1">创建1台</option>
@@ -57,13 +61,23 @@
             <option value="5">创建5台</option>
         </select></label></p>
         <p><label>系统 <select name="os" required>
-            <option value="debian10">Debian 10</option>
-            <option value="ubuntu20">Ubuntu 20.04 LTS</option>
-            <option value="ubuntu18">Ubuntu 18.04 LTS</option>
-            <option value="ubuntu16">Ubuntu 16.04</option>
-            <option value="centos">CentOS 7.5</option>
-            <option value="windows">WindowsServer2019</option>
-	    <option value="windows-server-2012-r2-datacenter-smalldisk-g2">[smalldisk] Windows Server 2012 R2 Datacenter - Gen2</option>
+            <option value="Debian_10">Debian 10 (gen2)</option>
+            <option value="Debian_9">Debian 9</option>
+            <option value="Debian_11">Debian 11 (gen2)</option>
+            <option value="Debian_10_gen1">Debian 10 (gen1)</option>
+            <option value="Debian_11_gen1">Debian 11 (gen1)</option>
+            <option value="Ubuntu_16_04">Ubuntu 16.04 (gen2)</option>
+            <option value="Ubuntu_18_04">Ubuntu 18.04 (gen2)</option>
+            <option value="Ubuntu_20_04">Ubuntu 20.04 (gen2)</option>
+            <option value="Ubuntu_16_04_gen1">Ubuntu 16.04 (gen1)</option>
+            <option value="Ubuntu_18_04_gen1">Ubuntu 18.04 (gen1)</option>
+            <option value="Ubuntu_20_04_gen1">Ubuntu 20.04 (gen1)</option>
+            <option value="WinData_2022">WinData_2022</option>
+            <option value="WinData_2019">WinData_2019</option>
+            <option value="WinData_2019">WinData_2016</option>
+            <option value="WinData_2012">WinData_2012</option>
+            <option value="WinDesk_10">WinDesk_10 (gen2)</option>
+            <option value="WinDesk_11">WinDesk_11</option>
         </select></label></p>
         <p><label>硬盘大小 <select name="disk" required>
             <option value="32">32 GB</option>
